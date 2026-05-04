@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ © 2026 by Intellectual Reserve, Inc. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.familysearch.intern.onboading</groupId>
+    <artifactId>springboard-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>springboard-webapp</artifactId>
+
+  <name>Intern Springboard Project Web Service</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.familysearch.stack.java</groupId>
+      <artifactId>java-stack-starter-health</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.familysearch.stack.java</groupId>
+      <artifactId>java-stack-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.webcohesion.enunciate</groupId>
+      <artifactId>enunciate-core-annotations</artifactId>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.familysearch.stack.java</groupId>
+      <artifactId>java-stack-assertj-spring</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <additionalProperties>
+            <versions.java-stack>${project.parent.parent.version}</versions.java-stack>
+            <!--suppress UnresolvedMavenProperty -->
+            <versions.spring-boot>${project.parent.parent.parent.parent.version}</versions.spring-boot>
+          </additionalProperties>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.webcohesion.enunciate</groupId>
+        <artifactId>enunciate-maven-plugin</artifactId>
+        <configuration>
+          <!-- Needed for Spring Boot runnable jars -->
+          <forceWarPackaging>false</forceWarPackaging>
+          <docsDir>${project.build.outputDirectory}/static</docsDir>
+          <enunciateArtifactId/>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

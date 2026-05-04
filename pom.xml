@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ © 2026 by Intellectual Reserve, Inc. All rights reserved.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.familysearch.stack.java</groupId>
+    <artifactId>java-stack-starter-parent</artifactId>
+    <version>4.0.6</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <groupId>org.familysearch.intern.onboading</groupId>
+  <artifactId>springboard-root</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Intern Springboard Project</name>
+  <description>A simple JavaStack project for helping interns gain an understanding of the mechanics of SpringBoot</description>
+
+  <!-- The following must either be empty or populated from your information.
+       Otherwise, information will be inherited from the parent pom. -->
+  <url>please provide the url of your project</url>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+
+  <scm>
+    <url>https://github.com/fs-eng/intern-onboarding-springboard</url>
+  </scm>
+
+  <properties>
+    <java.version>25</java.version>
+
+    <!-- FamilySearch dependency versions -->
+
+    <!-- Define dependency version properties managed by Java Stack and Spring Boot here if necessary.
+         Re-evaluate when the Java Stack version changes! -->
+
+    <!-- Third party dependencies -->
+    <exec-maven-plugin.version>3.6.2</exec-maven-plugin.version>
+    <error_prone_core.version>2.49.0</error_prone_core.version>
+    <nullaway.version>0.13.4</nullaway.version>
+    <enunciate.version>2.19.0</enunciate.version>
+
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.webcohesion.enunciate</groupId>
+          <artifactId>enunciate-maven-plugin</artifactId>
+          <version>${enunciate.version}</version>
+          <executions>
+            <execution>
+              <id>assemble</id>
+              <goals>
+                <goal>assemble</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <fork>true</fork>
+            <compilerArgs>
+              <arg>-XDcompilePolicy=simple</arg>
+              <arg>--should-stop=ifError=FLOW</arg>
+              <arg>-Xplugin:ErrorProne \
+                -XepDisableAllChecks -Xep:NullAway:ERROR \
+                -XepOpt:NullAway:JSpecifyMode=true \
+                -XepOpt:NullAway:OnlyNullMarked=true \
+                -XepOpt:NullAway:CustomContractAnnotations=org.springframework.lang.Contract \
+                -XepOpt:NullAway:HandleTestAssertionLibraries=true \
+                -XepOpt:NullAway:ExcludedFieldAnnotations=org.mockito.*
+              </arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+              <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+              <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+            </compilerArgs>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_core</artifactId>
+                <version>${error_prone_core.version}</version>
+              </path>
+              <path>
+                <groupId>com.uber.nullaway</groupId>
+                <artifactId>nullaway</artifactId>
+                <version>${nullaway.version}</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
+        <configuration>
+          <!-- Exclude Acceptance Tests from coverage while leaving unit tests of acceptance test utilities covered -->
+          <!-- Prevent enunciate generated client jars from being analyzed. see docsDir in enunciate plugin config -->
+          <excludes>
+            <exclude>**/acceptance/endpoints/*Test.*</exclude>
+            <exclude>**/static/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.webcohesion.enunciate</groupId>
+        <artifactId>enunciate-core-annotations</artifactId>
+        <version>${enunciate.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <modules>
+    <module>acceptance</module>
+    <module>webapp</module>
+  </modules>
+
+</project>

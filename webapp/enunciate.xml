@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ © 2026 by Intellectual Reserve, Inc. All rights reserved.
+  -->
+
+<enunciate xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://enunciate.webcohesion.com/schemas/enunciate-2.19.0.xsd">
+
+  <description package="org.familysearch.intern.springboard"/>
+  <copyright>by Intellectual Reserve, Inc. All rights reserved. A service provided by The Church of Jesus Christ of Latter-day Saints</copyright>
+
+  <api-classes>
+    <include pattern="org.familysearch.intern.springboard.ws.controller.**"/>
+  </api-classes>
+
+  <modules disabledByDefault="true">
+    <docs disabled="false"/>
+    <jackson disabled="false"/>
+    <spring-web disabled="false"/>
+    <swagger disabled="false"/>
+  </modules>
+
+</enunciate>
