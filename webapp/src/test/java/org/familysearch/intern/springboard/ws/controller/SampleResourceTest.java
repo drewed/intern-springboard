@@ -43,8 +43,11 @@ class SampleResourceTest {
 
   @Test
   void getSampleWithName() {
+    Name standardizedName = new Name("Testing Standardized", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of()));
     when(nameService.standardizeName("testing", "en"))
-        .thenReturn(new Name("Testing Standardized", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of())));
+        .thenReturn(standardizedName);
+    when(nameService.searchCountryStats(standardizedName, "en"))
+        .thenReturn(java.util.List.of());
 
     assertThat(mockMvc.get().uri("/sample")
         .queryParam("name", "testing"))
@@ -71,8 +74,11 @@ class SampleResourceTest {
 
   @Test
   void updateSample() {
+    Name standardizedName = new Name("Testing Standardized", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of()));
     when(nameService.standardizeName("testing", "en"))
-        .thenReturn(new Name("Testing Standardized", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of())));
+        .thenReturn(standardizedName);
+    when(nameService.searchCountryStats(standardizedName, "en"))
+        .thenReturn(java.util.List.of());
 
     assertThat(mockMvc.post().uri("/sample")
         .contentType(TEXT_PLAIN)
@@ -88,8 +94,11 @@ class SampleResourceTest {
 
   @Test
   void getSampleWithCustomLanguage() {
+    Name standardizedName = new Name("María García", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of()));
     when(nameService.standardizeName("María García", "es-MX"))
-        .thenReturn(new Name("María García", new org.familysearch.intern.springboard.ws.model.Fragments(java.util.List.of(), java.util.List.of())));
+        .thenReturn(standardizedName);
+    when(nameService.searchCountryStats(standardizedName, "es-MX"))
+        .thenReturn(java.util.List.of());
 
     assertThat(mockMvc.get().uri("/sample")
         .queryParam("name", "María García")

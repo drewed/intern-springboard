@@ -27,7 +27,8 @@ public class SampleResource {
   private ResponseEntity<Message> returnResponseEntity(final String name, final String languageTag) {
     LOGGER.info("Received request with '{}' and language tag '{}'.", name, languageTag);
     Name standardizedName = nameService.standardizeName(name, languageTag);
-    return ResponseEntity.ok(new Message(standardizedName.fullName()));
+    var countryStats = nameService.searchCountryStats(standardizedName, languageTag);
+    return ResponseEntity.ok(new Message(standardizedName.fullName(), countryStats));
   }
 
   @GetMapping(

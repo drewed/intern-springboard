@@ -22,7 +22,7 @@ public record Message (
     }
   }
 
-  public Message(String fullName) {
-    this(null, fullName, null);
+  public Message(String fullName, @Nullable List<CountryStats> countries) {
+    this(null, fullName, countries);
   }
 }
