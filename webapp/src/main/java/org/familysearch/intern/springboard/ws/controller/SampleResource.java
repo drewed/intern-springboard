@@ -6,6 +6,7 @@ package org.familysearch.intern.springboard.ws.controller;
 
 import java.util.Optional;
 
+import jakarta.validation.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -37,7 +38,7 @@ public class SampleResource {
   @GetMapping(
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<Message> getSample(@RequestParam(required = false) String name) {
+  public ResponseEntity<Message> getSample(@RequestParam @NotBlank(message = "Required parameter 'name' is blank.") String name) {
     return returnResponseEntity(name);
   }
 
@@ -45,7 +46,7 @@ public class SampleResource {
     consumes = MediaType.TEXT_PLAIN_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public ResponseEntity<Message> updateSample(@RequestBody String input) {
+  public ResponseEntity<Message> updateSample(@RequestBody @NotBlank(message = "Required parameter 'name' is blank.") String input) {
     return returnResponseEntity(input);
   }
 }
