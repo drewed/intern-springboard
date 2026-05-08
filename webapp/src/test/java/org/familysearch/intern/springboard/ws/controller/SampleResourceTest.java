@@ -29,7 +29,8 @@ class SampleResourceTest {
         .hasStatusOk()
         .bodyJson().isEqualTo("""
             {
-              "message": "Hello, testing!"
+              "greeting": "Hello",
+              "fullName": "testing"
             }
             """);
   }
@@ -54,7 +55,8 @@ class SampleResourceTest {
         .hasStatusOk()
         .bodyJson().isEqualTo("""
             {
-              "message": "Hello, testing!"
+              "greeting": "Hello",
+              "fullName": "testing"
             }
             """);
   }

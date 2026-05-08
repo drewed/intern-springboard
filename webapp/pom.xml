@@ -45,6 +45,11 @@
     </dependency>
 
     <dependency>
+      <groupId>org.familysearch.stack.java</groupId>
+      <artifactId>java-stack-starter-service-location</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.webcohesion.enunciate</groupId>
       <artifactId>enunciate-core-annotations</artifactId>
     </dependency>

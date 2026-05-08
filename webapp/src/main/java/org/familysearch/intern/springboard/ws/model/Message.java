@@ -4,14 +4,18 @@
 
 package org.familysearch.intern.springboard.ws.model;
 
-public class Message {
-  private final String messageString;
+import org.jspecify.annotations.Nullable;
 
-  public Message(String name) {
-    messageString = "Hello, %s!".formatted(name);
+public record Message (
+    @Nullable String greeting,
+    String fullName) {
+  public Message {
+    if (greeting == null) {
+      greeting = "Hello";
+    }
   }
 
-  public String getMessage() {
-    return messageString;
+  public Message(String fullName) {
+    this(null, fullName);
   }
 }
