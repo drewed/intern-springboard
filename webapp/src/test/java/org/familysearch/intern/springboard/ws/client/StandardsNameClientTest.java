@@ -33,7 +33,7 @@ class StandardsNameClientTest {
 
   @Test
   void successfulSegmentation() {
-    mockServer.expect(requestTo("http://test.service/names?name=John%20Smith&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=John%20Smith&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andExpect(header("Language", "en-US"))
         .andExpect(header("Accept-Language", "en-US"))
@@ -48,7 +48,7 @@ class StandardsNameClientTest {
 
   @Test
   void nonRetryableErrorThrowsException() {
-    mockServer.expect(requestTo("http://test.service/names?name=Invalid%20Name&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Invalid%20Name&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withBadRequest());
 
@@ -60,7 +60,7 @@ class StandardsNameClientTest {
 
   @Test
   void nullResponseThrowsException() {
-    mockServer.expect(requestTo("http://test.service/names?name=Test%20Name&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Test%20Name&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withSuccess());
 
@@ -72,7 +72,7 @@ class StandardsNameClientTest {
 
   @Test
   void verifyExceptionContainsNameAndLanguageTag() {
-    mockServer.expect(requestTo("http://test.service/names?name=Mar%C3%ADa%20Garc%C3%ADa&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Mar%C3%ADa%20Garc%C3%ADa&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andExpect(header("Language", "es-MX"))
         .andExpect(header("Accept-Language", "es-MX"))
@@ -92,13 +92,13 @@ class StandardsNameClientTest {
     // Test with faster retry timing (maxAttempts=2 means initial + 2 retries = 3 total calls)
     StandardsNameClient fastClient = new StandardsNameClient("http://test.service", 50, 2, builder);
 
-    mockServer.expect(requestTo("http://test.service/names?name=Test&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Test&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withTooManyRequests());
-    mockServer.expect(requestTo("http://test.service/names?name=Test&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Test&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withTooManyRequests());
-    mockServer.expect(requestTo("http://test.service/names?name=Test&annotations=PROPER_CASE&details=true"))
+    mockServer.expect(requestTo("http://test.service/names?fullname=Test&annotations=PROPER_CASE&details=true"))
         .andExpect(method(HttpMethod.GET))
         .andRespond(withTooManyRequests());
 

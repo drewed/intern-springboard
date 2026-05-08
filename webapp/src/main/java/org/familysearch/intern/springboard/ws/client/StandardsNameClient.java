@@ -38,10 +38,11 @@ public class StandardsNameClient {
       return Objects.requireNonNull(restClient.get()
           .uri(uriBuilder -> uriBuilder
               .path("/names")
-              .queryParam("name", name)
+              .queryParam("fullname", name)
               .queryParam("annotations", "PROPER_CASE")
               .queryParam("details", "true")
               .build())
+          .header("Accept", "application/json")
           .header("Language", languageTag)
           .header("Accept-Language", languageTag)
           .retrieve()
